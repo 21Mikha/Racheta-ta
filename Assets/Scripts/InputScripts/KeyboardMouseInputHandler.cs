@@ -7,7 +7,9 @@ public class KeyboardMouseInputHandler : InputHandler
     private bool isLeftActive = false;  // Flag to check if left button is active
     private bool isRightActive = false; // Flag to check if right button is active
 
-
+    private Vector2 previousMousePosition;
+    [SerializeField]
+    private float mouseSensitivity = 0.2f; // Sensitivity factor for deltaX adjustments
     private void Update()
     {
         Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
@@ -62,5 +64,28 @@ public class KeyboardMouseInputHandler : InputHandler
             isRightActive = false; // Reset flag after release
             rightHoldTime = 0f; // Reset after release
         }
+
+        TrackMouseDeltaX();
+    }
+
+
+
+    private void TrackMouseDeltaX()
+    {
+        Vector2 currentMousePosition = Input.mousePosition;
+        float deltaX = (currentMousePosition.x - previousMousePosition.x) * mouseSensitivity;
+
+        // Invoke the event with the scaled deltaX value
+        if (Mathf.Abs(deltaX) > Mathf.Epsilon) // Only trigger if there's a noticeable change
+        {
+            OnLaunchDirectionChanged?.Invoke(deltaX);
+        }
+
+        previousMousePosition = currentMousePosition;
+    }
+
+    public void SetSensitivity(float sensitivity)
+    {
+        mouseSensitivity = Mathf.Clamp(sensitivity, 0.1f, 10.0f); // Clamp sensitivity to a reasonable range
     }
 }

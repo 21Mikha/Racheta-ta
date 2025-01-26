@@ -9,4 +9,5 @@ public abstract class InputHandler : MonoBehaviour
     public Action<float> OnLeftHold;        // Left hold event
     public Action<float> OnRightHold;       // Right hold event
     public Action<bool> OnSprintInput;
+    public Action<float> OnLaunchDirectionChanged;
 }

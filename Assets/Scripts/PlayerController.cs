@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
     private bool isMoving = false;
     private bool isSprinting = false;
 
+
+    // Launch mechanic variables
+    private float launchAngle = 0f; // Launch angle in degrees (default 0)
+    private Vector3 launchDirection = Vector3.forward; // Default direction (0, 0, 1)
+
     // Rectangle bounds
     private float minX=-50, maxX = 50, minZ=-100, maxZ = 0;
     private void Awake()
@@ -40,6 +45,7 @@ public class PlayerController : MonoBehaviour
         inputHandler.OnRightClick += HandleRightClick;
         inputHandler.OnLeftHold += HandleLeftHold;
         inputHandler.OnRightHold += HandleRightHold;
+        inputHandler.OnLaunchDirectionChanged += HandleLaunchDirectionChanged;
     }
 
     private void OnDisable()
@@ -50,6 +56,7 @@ public class PlayerController : MonoBehaviour
         inputHandler.OnRightClick -= HandleRightClick;
         inputHandler.OnLeftHold -= HandleLeftHold;
         inputHandler.OnRightHold -= HandleRightHold;
+        inputHandler.OnLaunchDirectionChanged -= HandleLaunchDirectionChanged;
     }
 
     // Method to define the rectangle bounds
@@ -88,6 +95,25 @@ public class PlayerController : MonoBehaviour
     private void HandleRightHold(float duration)
     {
         Debug.Log($"Right hold duration: {duration}");
+    }
+    private void HandleLaunchDirectionChanged(float deltaX)
+    {
+        // Update the launch angle based on deltaX
+        // Assuming deltaX maps directly to angles between -90 and 90
+        launchAngle = Mathf.Clamp(launchAngle + deltaX, -90f, 90f);
+
+        // Convert the launch angle to a direction vector
+        launchDirection = Quaternion.Euler(0f, launchAngle, 0f) * Vector3.forward;
+    }
+
+    public float GetLaunchAngle()
+    {
+        return launchAngle;
+    }
+
+    public Vector3 GetLaunchDirection()
+    {
+        return launchDirection;
     }
 
     private void FixedUpdate()
