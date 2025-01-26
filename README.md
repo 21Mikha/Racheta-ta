@@ -1,2 +1,2 @@
 # Racheta-ta!
-(https://github.com/user-attachments/assets/95a16e71-1b5f-4110-a453-a7ce82ed71bc)
+![BG](https://github.com/user-attachments/assets/60a8be1d-6211-4a8d-b275-88ecde4e5b4a)
