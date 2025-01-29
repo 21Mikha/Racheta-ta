@@ -6,16 +6,26 @@ public class StaminaBar : MonoBehaviour
     [SerializeField] private Slider staminaSlider;
     [SerializeField] private Image fillImage;
     [SerializeField] private Gradient staminaGradient;
-    [SerializeField] private PlayerController playerController;
+    [SerializeField] private Player playerController;
 
     private void Start()
     {
-        if (playerController != null)
+        if (playerController == null)
         {
-            playerController.Stamina.OnStaminaChanged += UpdateStaminaUI;
-            InitializeStaminaUI(playerController.Stamina.MaxStamina);
+            Debug.LogError("StaminaBar: PlayerController is not assigned in the Inspector!");
+            return;
         }
+
+        if (playerController.Stamina == null)
+        {
+            Debug.LogError("StaminaBar: PlayerController's Stamina is null!");
+            return;
+        }
+
+        playerController.Stamina.OnStaminaChanged += UpdateStaminaUI;
+        InitializeStaminaUI(playerController.Stamina.MaxStamina);
     }
+
 
     private void InitializeStaminaUI(float maxStamina)
     {

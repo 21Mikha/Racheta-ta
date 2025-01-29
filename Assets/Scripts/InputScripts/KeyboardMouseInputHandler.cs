@@ -104,8 +104,10 @@ public class KeyboardMouseInputHandler : InputHandler
             {
                 OnRightHold?.Invoke(maxHoldTime); // Invoke with max hold time
                 holdTime = 0f;              // Reset the timer
+
+                ActivateCooldown();
             }
-            ActivateCooldown();
+
         }
 
         if (Input.GetMouseButtonUp(1) && isRightActive)
