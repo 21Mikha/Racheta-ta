@@ -23,7 +23,7 @@ public class LandingIndicator : MonoBehaviour
         if (ball != null)
         {
             // Subscribe to the OnSuccessfulShot event
-            ball.OnSuccessfulShot += HandleSuccessfulShot;
+            Ball.OnSuccessfulShot += HandleSuccessfulShot;
         }
     }
 
@@ -32,7 +32,7 @@ public class LandingIndicator : MonoBehaviour
         if (ball != null)
         {
             // Unsubscribe from the event to avoid memory leaks
-            ball.OnSuccessfulShot -= HandleSuccessfulShot;
+            Ball.OnSuccessfulShot -= HandleSuccessfulShot;
         }
     }
 

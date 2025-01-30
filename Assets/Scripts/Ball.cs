@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -34,7 +35,11 @@ public class Ball : MonoBehaviour
     private float lobAngle = 45f; // High angle for lob shots
 
     public bool canPerformShot;
-    public event System.Action<Vector3,Player> OnSuccessfulShot;
+    public static event Action<Vector3,Player> OnSuccessfulShot;
+    public static event Action<string> OnTriggerEnterZone;
+    public static event Action OnBallHitNet;
+    public static event Action OnBallOutOfBounds;
+    public static event Action<string> OnGroundHit;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -113,15 +118,30 @@ public class Ball : MonoBehaviour
 
 
 
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             canPerformShot = true;
         }
+        if (other.CompareTag("ZoneA") || other.CompareTag("ZoneB"))
+        {
+            OnTriggerEnterZone?.Invoke(other.tag);
+        }
+        else if (other.CompareTag("Net"))
+        {
+            OnBallHitNet?.Invoke();
+        }
+        else if (other.CompareTag("OutOfBounds"))
+        {
+            OnBallOutOfBounds?.Invoke();
+        }
+        else if (other.CompareTag("GroundArea"))
+        {
+            OnGroundHit?.Invoke(other.name);
+        }
     }
+
 
     private void OnTriggerExit(Collider other)
     {

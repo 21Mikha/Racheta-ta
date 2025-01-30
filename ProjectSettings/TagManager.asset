@@ -4,9 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Wall
   - Ground
   - Ball
+  - ZoneA
+  - ZoneB
+  - Net
+  - OutOfBounds
+  - GroundArea
   layers:
   - Default
   - TransparentFX

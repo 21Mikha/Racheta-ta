@@ -30,8 +30,8 @@ public class AIController : Player
         SetBounds(-40, 40, 0,100);
     }
 
-    private void OnEnable() => ball.OnSuccessfulShot += OnBallHit;
-    private void OnDisable() => ball.OnSuccessfulShot -= OnBallHit;
+    private void OnEnable() => Ball.OnSuccessfulShot += OnBallHit;
+    private void OnDisable() => Ball.OnSuccessfulShot -= OnBallHit;
 
 
     private void Update()
