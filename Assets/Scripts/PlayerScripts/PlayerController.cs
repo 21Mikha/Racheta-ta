@@ -49,32 +49,31 @@ public class PlayerController : Player
 
     private void HandleLeftClick()
     {
-        //Debug.Log("Left click detected.");
-        ball.FlatShot(GetLaunchDirection(),this);
+        Debug.Log("Left click detected.");
+        if (canPerformShot)
+        shootingMechanic.PerformFlatShot(GetLaunchDirection());
     }
 
     private void HandleRightClick()
     {
         //Debug.Log("Right click detected.");
-        ball.SliceShot(GetLaunchDirection(), this);
+        if (canPerformShot)
+            shootingMechanic.PerformSliceShot(GetLaunchDirection());
 
     }
 
     private void HandleLeftHold(float duration)
     {
-       // Debug.Log($"Left hold duration: {duration}");
-
-       // ball.TopspinShot(GetLaunchDirection(), duration,this);
-
-        //Debug.Log("Left click detected.");
-        ball.FlatShot(GetLaunchDirection(), this);
-
+        // Debug.Log($"Left hold duration: {duration}");
+        if (canPerformShot)
+            shootingMechanic.PerformTopspinShot(GetLaunchDirection(), duration);
     }
 
     private void HandleRightHold(float duration)
     {
         //Debug.Log($"Right hold duration: {duration}");
-        ball.LobShot(GetLaunchDirection(), duration,this);
+        if (canPerformShot)
+            shootingMechanic.PerformLobShot(GetLaunchDirection(), duration);
     }
     private void HandleLaunchDirectionChanged(float deltaX)
     {

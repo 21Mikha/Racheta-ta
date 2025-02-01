@@ -1057,18 +1057,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcaaccbc86210d5468f378849dce4cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flatShotSpeed: 50
-  topspinBaseSpeed: 45
-  sliceSpeed: 6.5
-  lobBaseSpeed: 5
-  topspinSpin: 500
-  sliceSpin: -300
-  maxHoldTime: 2
-  flatShotAngle: 45
-  topspinAngle: 15
-  sliceAngle: 10
-  lobAngle: 45
-  canPerformShot: 0
 --- !u!120 &602597278
 LineRenderer:
   serializedVersion: 2
@@ -1214,6 +1202,7 @@ GameObject:
   - component: {fileID: 806751196}
   - component: {fileID: 806751197}
   - component: {fileID: 806751203}
+  - component: {fileID: 806751204}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1368,6 +1357,30 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.99
   m_Center: {x: 0, y: 0.6, z: 0.83}
+--- !u!114 &806751204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806751195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b831b7861f32cba40b1bceef35d2af27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 602597272}
+  flatShotSpeed: 45
+  topspinBaseSpeed: 75
+  sliceSpeed: 75
+  lobBaseSpeed: 75
+  topspinSpin: 500
+  sliceSpin: -300
+  maxHoldTime: 2
+  flatShotAngle: 35
+  topspinAngle: 15
+  sliceAngle: 10
+  lobAngle: 45
 --- !u!1 &880473566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2430,6 +2443,7 @@ GameObject:
   - component: {fileID: 1939322238}
   - component: {fileID: 1939322236}
   - component: {fileID: 1939322235}
+  - component: {fileID: 1939322242}
   m_Layer: 0
   m_Name: AiPlayer
   m_TagString: Player
@@ -2575,6 +2589,30 @@ Transform:
   - {fileID: 1074173305}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &1939322242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939322234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b831b7861f32cba40b1bceef35d2af27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 602597272}
+  flatShotSpeed: 35
+  topspinBaseSpeed: 75
+  sliceSpeed: 75
+  lobBaseSpeed: 25
+  topspinSpin: 500
+  sliceSpin: -300
+  maxHoldTime: 2
+  flatShotAngle: 35
+  topspinAngle: 45
+  sliceAngle: 10
+  lobAngle: 75
 --- !u!1 &2039639292
 GameObject:
   m_ObjectHideFlags: 0

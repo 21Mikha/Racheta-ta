@@ -13,7 +13,6 @@ public class AIController : Player
     [SerializeField] private float netApproachDistance = 5f;
     [SerializeField] private float lobVerticalThreshold = -20f;
 
-    private Rigidbody rb;
     private Vector3 targetPosition;
     private bool isBallApproaching;
     private float decisionTimer;
@@ -25,7 +24,6 @@ public class AIController : Player
     protected override void Awake()
     {
         base.Awake();
-        rb = GetComponent<Rigidbody>();
         neutralPosition = new Vector3(0, 0, transform.position.z);
         SetBounds(-40, 40, 0,100);
     }
@@ -55,7 +53,7 @@ public class AIController : Player
                     ChangeState(AIState.PrepareForShot);
                 break;
 
-            case AIState.PrepareForShot when ball.canPerformShot:
+            case AIState.PrepareForShot when canPerformShot:
                 ExecuteShot();
                 break;
 
@@ -129,22 +127,25 @@ public class AIController : Player
 
     private void ExecuteShot()
     {
-        Vector3 shotDirection = CalculateOptimalShotDirection();
+        if (canPerformShot)
+        {
+            Vector3 shotDirection = CalculateOptimalShotDirection();
 
-        if (ShouldUseLob())
-        {
-            ball.LobShot(shotDirection, Random.Range(0.8f, 1.2f), this);
-        }
-        else if (ShouldUseTopspin())
-        {
-            ball.TopspinShot(shotDirection, Random.Range(0.5f, 1.5f), this);
-        }
-        else
-        {
-            ball.FlatShot(shotDirection, this);
+            if (ShouldUseLob())
+            {
+                shootingMechanic.PerformLobShot(shotDirection, Random.Range(0.8f, 1.2f));
+            }
+            else if (ShouldUseTopspin())
+            {
+                shootingMechanic.PerformTopspinShot(shotDirection, Random.Range(0.5f, 1.5f));
+            }
+            else
+            {
+                shootingMechanic.PerformFlatShot(shotDirection);
+            }
+            ChangeState(AIState.RecoverPosition);
         }
 
-        ChangeState(AIState.RecoverPosition);
     }
 
     private Vector3 CalculateOptimalShotDirection()

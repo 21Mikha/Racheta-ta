@@ -54,22 +54,20 @@ public class KeyboardMouseInputHandler : InputHandler
             holdTime = 0f; // Reset timer
         }
 
-        if (Input.GetMouseButtonUp(0) && isLeftActive)
+        if (Input.GetMouseButton(0) && isLeftActive)
         {
-            if (holdTime < 0.2f)
-            {
-                OnLeftClick?.Invoke(); // Should fire only once on a quick click.
-            }
-            else if (holdTime > 0.2f)
-            {
-                OnLeftClick?.Invoke();
-               // OnLeftHold?.Invoke(holdTime);
-            }
-            isLeftActive = false;
-            holdTime = 0f;
-            ActivateCooldown();
-        }
+            holdTime += Time.deltaTime;
 
+            // Check if the hold time is greater than or equal to the max hold time
+            if (holdTime >= maxHoldTime)
+            {
+                OnLeftHold?.Invoke(maxHoldTime); // Invoke with max hold time
+                holdTime = 0f;              // Reset the timer
+
+                ActivateCooldown();
+            }
+
+        }
 
         if (Input.GetMouseButtonUp(0) && isLeftActive)
         {
@@ -88,6 +86,8 @@ public class KeyboardMouseInputHandler : InputHandler
             ActivateCooldown();
         }
     }
+
+
 
     private void HandleRightMouseButton()
     {

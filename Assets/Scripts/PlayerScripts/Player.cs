@@ -26,15 +26,21 @@ public abstract class Player : MonoBehaviour
 
 
     [Header("Launching Settings")]
+    protected ShootingMechanic shootingMechanic;
     protected float launchAngle = 0f;
     protected Vector3 launchDirection = Vector3.forward;
-
+    protected bool canPerformShot;
     [Header("Bounds Settings")]
     protected float minX = -50, maxX = 50, minZ = -100, maxZ = 0;
 
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        shootingMechanic = GetComponent<ShootingMechanic>();
+        if (shootingMechanic != null)
+        {
+            shootingMechanic.Initialize(ball);
+        }
         currentSpeed = movementSpeed;
         stamina = new Stamina(maxStamina, staminaRegenRate, staminaDepletionRate);
 
@@ -89,4 +95,19 @@ public abstract class Player : MonoBehaviour
         clampedPosition.z = Mathf.Clamp(clampedPosition.z, minZ, maxZ);
         rb.position = clampedPosition;
     }
-}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ball"))
+        {
+            canPerformShot = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ball"))
+        {
+            canPerformShot = false;
+        }
+    }
+
+    }
