@@ -17,17 +17,14 @@ public class KeyboardMouseInputHandler : InputHandler
 
     private void Update()
     {
-        // Update cooldown timers
+        // Update cooldown timer once.
         if (isClickLocked)
         {
             cooldownTimer -= Time.deltaTime;
-            if (cooldownTimer <= 0f) isClickLocked = false;
-        }
-
-        if (isClickLocked)
-        {
-            cooldownTimer -= Time.deltaTime;
-            if (cooldownTimer <= 0f) isClickLocked = false;
+            if (cooldownTimer <= 0f)
+            {
+                isClickLocked = false;
+            }
         }
 
         Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
@@ -37,15 +34,17 @@ public class KeyboardMouseInputHandler : InputHandler
         bool isSprinting = Input.GetKey(KeyCode.LeftShift);
         OnSprintInput?.Invoke(isSprinting);
 
-        // Left Mouse Button Handling
-        if (!isClickLocked) HandleLeftMouseButton();
+        // Handle Left and Right Mouse Buttons if not locked.
+        if (!isClickLocked)
+        {
+            HandleLeftMouseButton();
+            HandleRightMouseButton();
+        }
 
-        // Right Mouse Button Handling
-        if (!isClickLocked) HandleRightMouseButton();
-
-        // Track Mouse deltaX
+        // Track mouse delta for launch direction.
         TrackMouseDeltaX();
     }
+
 
     private void HandleLeftMouseButton()
     {
@@ -55,19 +54,22 @@ public class KeyboardMouseInputHandler : InputHandler
             holdTime = 0f; // Reset timer
         }
 
-        if (Input.GetMouseButton(0) && isLeftActive)
+        if (Input.GetMouseButtonUp(0) && isLeftActive)
         {
-            holdTime += Time.deltaTime;
-
-            // Check if the hold time is greater than or equal to the max hold time
-            if (holdTime >= maxHoldTime)
+            if (holdTime < 0.2f)
             {
-                OnLeftHold?.Invoke(maxHoldTime); // Invoke with max hold time
-                holdTime = 0f;              // Reset the timer
-
-                ActivateCooldown();
+                OnLeftClick?.Invoke(); // Should fire only once on a quick click.
             }
+            else if (holdTime > 0.2f)
+            {
+                OnLeftClick?.Invoke();
+               // OnLeftHold?.Invoke(holdTime);
+            }
+            isLeftActive = false;
+            holdTime = 0f;
+            ActivateCooldown();
         }
+
 
         if (Input.GetMouseButtonUp(0) && isLeftActive)
         {

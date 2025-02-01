@@ -49,13 +49,13 @@ public class PlayerController : Player
 
     private void HandleLeftClick()
     {
-        Debug.Log("Left click detected.");
+        //Debug.Log("Left click detected.");
         ball.FlatShot(GetLaunchDirection(),this);
     }
 
     private void HandleRightClick()
     {
-        Debug.Log("Right click detected.");
+        //Debug.Log("Right click detected.");
         ball.SliceShot(GetLaunchDirection(), this);
 
     }
@@ -66,7 +66,7 @@ public class PlayerController : Player
 
        // ball.TopspinShot(GetLaunchDirection(), duration,this);
 
-        Debug.Log("Left click detected.");
+        //Debug.Log("Left click detected.");
         ball.FlatShot(GetLaunchDirection(), this);
 
     }
