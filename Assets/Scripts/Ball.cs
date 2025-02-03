@@ -12,6 +12,9 @@ public class Ball : MonoBehaviour
     public static event Action OnBallOutOfBounds;
     public static event Action OnGroundHit;
     public static event Action<Player, Vector3> OnPlayerHitBall; // For AI to subscribe
+
+
+ 
     Vector3 predictedPosition;
     private void Awake()
     {
@@ -70,6 +73,7 @@ public class Ball : MonoBehaviour
         if (collision.collider.CompareTag("GroundArea"))
         {
             OnGroundHit?.Invoke();
+
         }
         else if (collision.collider.CompareTag("Net"))
         {
@@ -89,16 +93,17 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-         if (other.CompareTag("ZoneA") || other.CompareTag("ZoneB"))
+        if (other.CompareTag("ZoneA") || other.CompareTag("ZoneB"))
         {
             OnCollisionZone?.Invoke(other.tag);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-         if (other.CompareTag("OutOfBounds"))
+        if (other.CompareTag("OutOfBounds"))
         {
             OnBallOutOfBounds?.Invoke();
         }
     }
+
 }

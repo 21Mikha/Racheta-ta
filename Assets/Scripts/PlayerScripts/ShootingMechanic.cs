@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShootingMechanic : MonoBehaviour
 {
-    [SerializeField] private Ball ball;
+    [SerializeField] private BallPhysics ball;
 
     // Shot parameters
 
@@ -18,7 +18,7 @@ public class ShootingMechanic : MonoBehaviour
     [SerializeField] private float sliceAngle = 10f;
     [SerializeField] private float lobAngle = 45f;
 
-    public void Initialize(Ball ballReference)
+    public void Initialize(BallPhysics ballReference)
     {
         ball = ballReference;
     }
@@ -63,7 +63,7 @@ public class ShootingMechanic : MonoBehaviour
         Vector3 appliedForce = adjustedDirection * speed;
 
         // Delegate the shot to the ball.
-        ball.ApplyShot(appliedForce, spin,this.GetComponent<Player>());
+        ball.ApplyShot(appliedForce,this.GetComponent<Player>());
         return true;
     }
 }

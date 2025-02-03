@@ -93,21 +93,21 @@ public class RallyManager : MonoBehaviour
     {
         // Subscribe to ball collision events.
         // (Your Ball class should invoke these events from OnCollisionEnter.)
-        Ball.OnGroundHit += HandleBallBounce;
+        BallPhysics.OnGroundHit += HandleBallBounce;
         Ball.OnCollisionZone += HandleCollisionZone;
         Ball.OnBallHitNet += HandleBallNetHit;
         Ball.OnBallOutOfBounds += HandleBallOutOfBounds;
-        Ball.OnPlayerHitBall += HandlePlayerHitBall;
+        BallPhysics.OnPlayerHitBall += HandlePlayerHitBall;
     }
 
     private void OnDestroy()
     {
         // Unsubscribe to avoid memory leaks.
-        Ball.OnGroundHit -= HandleBallBounce;
+        BallPhysics.OnGroundHit -= HandleBallBounce;
         Ball.OnCollisionZone -= HandleCollisionZone;
         Ball.OnBallHitNet -= HandleBallNetHit;
         Ball.OnBallOutOfBounds -= HandleBallOutOfBounds;
-        Ball.OnPlayerHitBall -= HandlePlayerHitBall;
+        BallPhysics.OnPlayerHitBall -= HandlePlayerHitBall;
     }
 
     private void Update()
@@ -147,7 +147,7 @@ public class RallyManager : MonoBehaviour
     #region Event Handlers
 
     // Called when a player hits the ball.
-    private void HandlePlayerHitBall(Player player, Vector3 velocity)
+    private void HandlePlayerHitBall(Vector3 Pos, Vector3 velocity, Player player)
     {
         if (CurrentRallyState == RallyState.WaitingForRally)
         {
@@ -159,7 +159,7 @@ public class RallyManager : MonoBehaviour
     }
 
     // Called when the ball bounces (via collision with the court).
-    private void HandleBallBounce()
+    private void HandleBallBounce(Vector3 Pos, Vector3 velocity)
     {
         // Use the most recent zone information (set in HandleCollisionZone).
         string zone = lastZone;

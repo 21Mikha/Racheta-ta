@@ -12,12 +12,11 @@ public class BallTracer : MonoBehaviour
     [SerializeField] private float heightOffset = 0.1f; // Prevent z-fighting
 
     private Vector3[] positions;
-    private Rigidbody rb;
     private float timer;
-
+    private BallPhysics ball;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        ball = GetComponent<BallPhysics>();
         InitializeLineRenderer();
     }
 
@@ -30,7 +29,7 @@ public class BallTracer : MonoBehaviour
 
     private void Update()
     {
-        if (rb.velocity.magnitude < minSpeedToShowTrail)
+        if (ball.GetVelocity().magnitude < minSpeedToShowTrail)
         {
             lineRenderer.enabled = false;
             return;

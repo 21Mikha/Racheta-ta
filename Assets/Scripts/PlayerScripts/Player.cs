@@ -20,7 +20,7 @@ public abstract class Player : MonoBehaviour
     public Stamina Stamina => stamina;
 
     [Header("Ball Settings")]
-    [SerializeField] protected Ball ball;
+    [SerializeField] protected BallPhysics ball;
 
     protected Rigidbody rb;
 

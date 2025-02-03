@@ -21,6 +21,7 @@ public class AIController : Player
     [SerializeField] private Transform opponent;
     private Vector3 lastOpponentPosition;
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -28,8 +29,8 @@ public class AIController : Player
         SetBounds(-40, 40, 0,100);
     }
 
-    private void OnEnable() => Ball.OnSuccessfulShot += OnBallHit;
-    private void OnDisable() => Ball.OnSuccessfulShot -= OnBallHit;
+    private void OnEnable() => BallPhysics.OnPlayerHitBall += HandleOnPlayerHitBall;
+    private void OnDisable() => BallPhysics.OnPlayerHitBall -= HandleOnPlayerHitBall;
 
 
     private void Update()
@@ -69,14 +70,18 @@ public class AIController : Player
         }
     }
 
-    private void OnBallHit(Vector3 landingPosition, Player player)
+    private void HandleOnPlayerHitBall(Vector3 pos, Vector3 velocity,Player player)
     {
         if (player != this)
         {
+            float gravity = BallPhysics.GetGravity();
+            Vector3 firstLanding = BallLandingPredictor.PredictLandingPosition(pos, velocity, gravity);
             decisionTimer = reactionTime;
-            targetPosition = CalculateOptimalMovePosition(landingPosition);
+            targetPosition = CalculateOptimalMovePosition(firstLanding);
             isBallApproaching = true;
             lastOpponentPosition = opponent.position;
+
+
 
             // Immediately interrupt recovery if ball is coming
             if (currentState == AIState.RecoverPosition)
